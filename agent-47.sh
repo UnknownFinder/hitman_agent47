@@ -28,14 +28,6 @@ if [ $choice -eq 2 ]; then
 	echo "If you want to delete all chains, enter 6."
  	echo "If you want to exit enter 99"
    	read firewall_choice
-    if [ $firewall_choice -eq 1 ]; then
-        echo "Enter port numbers. Press 0 to stop."
-		read amount
-        for ((i = 0 ; i < $amount ; i++)); do
-			read element
-            sudo iptables -A INPUT -p tcp --dport $element -j ACCEPT
-        done
-	fi
     if [ $firewall_choice -eq 2 ]; then
     	echo "You have chosen to close one port. Please, enter a port number:"
     	read port
