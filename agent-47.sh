@@ -13,12 +13,13 @@ echo "Hello, User! I was created to help you set some settings on  your machine.
 echo "To know information about your system enter 1"
 echo "To create a simple firewall rool enter 2"
 echo "To protect your system from hardware crushs enter 3"
-echo "To stop this script enter 99"	
+echo "To exit enter 99"	
 read choice
 if [ $choice -eq 1 ]; then 
 	bash $SCRIPT_DIRECTORY/system_monitor.sh
 fi
-if [ $choice -eq 2 ]; then 
+if [ $choice -eq 2 ]; then
+	while true; do
     echo "Please read this instruction to avoid problems in future:"
     echo "If you want to block one port enter 2, then follow the instructions"
     echo "If you want to block more than one port enter 3, then follow the instruction"
@@ -64,6 +65,10 @@ if [ $choice -eq 2 ]; then
             sudo iptables -F
 			sudo iptables -X
    		fi
+	 	if [ $firewall_choice -eq 99 ]; then
+   			break
+	  	fi
+	done
 fi
 echo "O'kay, you've create some firewall settings."
 if [ $choice -eq 3 ]; then
