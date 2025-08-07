@@ -32,7 +32,7 @@ if [ $choice -eq 2 ]; then
         echo "Enter port numbers. Press 0 to stop."
 		read amount
         for ((i = 0 ; i < $amount ; i++)); do
-			read $element
+			read element
             sudo iptables -A INPUT -p tcp --dport $element -j ACCEPT
         done
 	fi
