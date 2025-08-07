@@ -19,14 +19,16 @@ if [ $choice -eq 1 ]; then
 	bash $SCRIPT_DIRECTORY/system_monitor.sh
 fi
 if [ $choice -eq 2 ]; then 
-        echo "Please read this instruction to avoid problems in future:"
-        echo "If you want to open ports, enter 1, then follow the instructions:"
-        echo "If you want to block one port enter 2, then follow the instructions"
-        echo "If you want to block more than one port enter 3, then follow the instruction"
-        echo "If you want to create white list of IP-addresses and block all orher connections enter 4, then follow the instruction"
+  	while [ $firewall_choice -ne 99]: do
+      	echo "Please read this instruction to avoid problems in future:"
+	    echo "If you want to open ports, enter 1, then follow the instructions:"
+    	echo "If you want to block one port enter 2, then follow the instructions"
+    	echo "If you want to block more than one port enter 3, then follow the instruction"
+	    echo "If you want to create white list of IP-addresses and block all orher connections enter 4, then follow the instruction"
         echo "If you want to create blacklist of IP-addresses and accept all other connections entire 5 then follow the instruction"
-        echo "If you want to delete all chains, enter 6."
-        read firewall_choice
+    	echo "If you want to delete all chains, enter 6."
+	 	echo "If you want to exit enter 99"
+   		read firewall_choice
         #We will drop all packages with invalid status
         sudo iptables -A INNPUT -m state --state INVALID -j DROP
         sudo iptables -A FORWARD -m state --state INVALID -j DROP
@@ -37,12 +39,12 @@ if [ $choice -eq 2 ]; then
         sudo iptables -A INPUT --fragment -p ICMP -j DROP
         sudo iptables -A OUTPUT --fragment -p ICMP -j DROP
         if [ $firewall_choice -eq 1 ]; then
-                echo "Enter port numbers:"
-                declare -a open_ports
-                read -a open_ports
-                for openport in "${open_ports}"; do
-                        sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
-                done
+            echo "Enter port numbers:"
+            declare -a open_ports
+            read -a open_ports
+            for openport in "${open_ports}"; do
+                sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
+            done
         elif [ $firewall_choice -eq 2 ]; then
                 echo "You have chosen to close one port. Please, enter a port number:"
                 read port
@@ -78,6 +80,7 @@ if [ $choice -eq 2 ]; then
 		sudo iptables -X
   	fi
 	echo "Well, you've created firewall rools, so I hope, that your protection is effective, but remember - no system is safe..."
+	done
 fi
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
