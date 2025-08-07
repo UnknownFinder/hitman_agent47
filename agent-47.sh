@@ -17,8 +17,7 @@ echo "To stop this script enter 99"
 read choice
 if [ $choice -eq 1 ]; then 
 	bash $SCRIPT_DIRECTORY/system_monitor.sh
-fi
-if [ $choice -eq 2 ]; then 
+elif [ $choice -eq 2 ]; then 
     echo "Please read this instruction to avoid problems in future:"
 	echo "If you want to open ports, enter 1, then follow the instructions:"
     echo "If you want to block one port enter 2, then follow the instructions"
