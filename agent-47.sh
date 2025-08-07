@@ -39,12 +39,12 @@ if [ $choice -eq 2 ]; then
         echo "You have chosen to close some ports. Please, enter ports, which must be closed. Press 0 to stop."
 		while true; do
   		read port
+  		if [[ $port -eq 0 ]]; then
+  			break
+	 	fi
         sudo iptables -A INPUT -p tcp --dport $port -j DROP
         sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
         sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
-		if [[ $port -eq 0 ]]; then
-  			break
-	 	fi
         done
 	fi
         if [ $firewall_choice -eq 4 ]; then
