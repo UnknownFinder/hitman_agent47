@@ -81,8 +81,8 @@ elif [ $choice -eq 2 ]; then
         if [ $firewall_choice -eq 6 ]; then
             sudo iptables -F
 			sudo iptables -X
-		fi
 	done
+fi
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
 	echo "1 to create service which will controll thresholds"
