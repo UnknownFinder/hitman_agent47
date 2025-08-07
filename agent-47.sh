@@ -44,6 +44,7 @@ elif [ $choice -eq 2 ]; then
             for openport in "${open_ports}"; do
                 sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
             done
+		fi
         if [ $firewall_choice -eq 2 ]; then
             echo "You have chosen to close one port. Please, enter a port number:"
             read port
@@ -78,9 +79,10 @@ elif [ $choice -eq 2 ]; then
                 sudo iptables -A OUTPUT -s $ip_address -j DROP
             done
 		fi
-        if [ $firewall_choice -eq 6 ]; then
+  		if [ $firewall_choice -eq 6 ]; then
             sudo iptables -F
 			sudo iptables -X
+   		fi
 	done
 fi
 if [ $choice -eq 3 ]; then
