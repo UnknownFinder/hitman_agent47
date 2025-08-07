@@ -28,7 +28,7 @@ if [ $choice -eq 2 ]; then
 	echo "If you want to delete all chains, enter 6."
  	echo "If you want to exit enter 99"
    	read firewall_choice
-	 	while [[ $firewall_choice -ne 99 ]]; do
+	while [[ $firewall_choice -ne 99 ]]; do
         #We will drop all packages with invalid status
         sudo iptables -A INNPUT -m state --state INVALID -j DROP
         sudo iptables -A FORWARD -m state --state INVALID -j DROP
