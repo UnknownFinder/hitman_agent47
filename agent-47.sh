@@ -28,39 +28,30 @@ if [ $choice -eq 2 ]; then
 	echo "If you want to delete all chains, enter 6."
  	echo "If you want to exit enter 99"
    	read firewall_choice
-        #We will drop all packages with invalid status
-        sudo iptables -A INNPUT -m state --state INVALID -j DROP
-        sudo iptables -A FORWARD -m state --state INVALID -j DROP
-        #Protecting from SYN flood
-        sudo iptables -A INPUT  -p tcp ! --syn -m state --state NEW -j DROP
-        sudo iptables -A OUTPUT -p tcp ! --syn -m state --state NEW -j DROP
-        #Protecting from ICMP redirectioin
-        sudo iptables -A INPUT --fragment -p ICMP -j DROP
-        sudo iptables -A OUTPUT --fragment -p ICMP -j DROP
-        if [ $firewall_choice -eq 1 ]; then
-            echo "Enter port numbers:"
-            declare -a open_ports
-            read -a open_ports
-            for openport in "${open_ports}"; do
-                sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
-            done
-		fi
-        if [ $firewall_choice -eq 2 ]; then
-            echo "You have chosen to close one port. Please, enter a port number:"
-            read port
+    if [ $firewall_choice -eq 1 ]; then
+        echo "Enter port numbers:"
+		declare -a open_ports
+        read -a open_ports
+        for openport in "${open_ports}"; do
+            sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
+        done
+	fi
+    if [ $firewall_choice -eq 2 ]; then
+    	echo "You have chosen to close one port. Please, enter a port number:"
+    	read port
+        sudo iptables -A INPUT -p tcp --dport $port -j DROP
+        sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
+	fi
+    if [ $firewall_choice -eq 3 ]; then
+        echo "You have chosen to close some ports. Please, enter ports, which must be closed."
+		declare -a closed_ports
+        read -a closed_ports
+        for port in "${closed_ports}"; do
             sudo iptables -A INPUT -p tcp --dport $port -j DROP
+            sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
             sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
-		fi
-        if [ $firewall_choice -eq 3 ]; then
-            echo "You have chosen to close some ports. Please, enter ports, which must be closed."
-			declare -a closed_ports
-            read -a closed_ports
-            for port in "${closed_ports}"; do
-                    sudo iptables -A INPUT -p tcp --dport $port -j DROP
-                    sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
-                    sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
-            done
-		fi
+        done
+	fi
         if [ $firewall_choice -eq 4 ]; then
             echo "Enter ip-addresses that must be added to whitelist:"
             declare -a whitelist
