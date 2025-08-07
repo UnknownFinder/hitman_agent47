@@ -77,9 +77,8 @@ if [ $choice -eq 2 ]; then
                 done
         elif [ $firewall_choice -eq 6 ]; then
                 sudo iptables -F
-		sudo iptables -X
-  	fi
-	echo "Well, you've created firewall rools, so I hope, that your protection is effective, but remember - no system is safe..."
+				sudo iptables -X
+		fi
 	done
 fi
 if [ $choice -eq 3 ]; then
