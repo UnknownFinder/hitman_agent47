@@ -29,7 +29,7 @@ if [ $choice -eq 2 ]; then
     #Protecting from ICMP redirectioin
     sudo iptables -A INPUT --fragment -p ICMP -j DROP
     sudo iptables -A OUTPUT --fragment -p ICMP -j DROP
-	echo "Now uoyr system protected from SYN flood, ICMP redirection and packages with <INVALID> status."
+	echo "Now your system protected from SYN flood, ICMP redirection and packages with <INVALID> status."
 fi
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
