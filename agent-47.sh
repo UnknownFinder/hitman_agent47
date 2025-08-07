@@ -83,7 +83,6 @@ elif [ $choice -eq 2 ]; then
 			sudo iptables -X
 		fi
 	done
-fi
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
 	echo "1 to create service which will controll thresholds"
