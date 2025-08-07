@@ -3,6 +3,7 @@ clear
 DIR=$(pwd)
 export SCRIPT_DIRECTORY=$DIR 
 sleep 1
+while true; do
 echo " _    _   ___   _____     _     _           __       _    _ "
 echo "| |  | | |_ _| |_   _|   / \   / \         /  \     | |  | |"
 echo "| |__| |  | |    | |    /   \_/   \       / /\ \    |  \ | |"
@@ -94,5 +95,6 @@ if [ $choice -eq 3 ]; then
 fi	
 if [ $choice -eq 99 ]; then
 	echo "Goodbuy, have a nice day!"
-	exit 0
+	break
 fi
+done
