@@ -21,7 +21,7 @@ if [ $choice -eq 1 ]; then
 fi
 if [ $choice -eq 2 ]; then
 	#We will drop all packages with invalid status
-    sudo iptables -A INNPUT -m state --state INVALID -j DROP
+    sudo iptables -A INPUT -m state --state INVALID -j DROP
     sudo iptables -A FORWARD -m state --state INVALID -j DROP
     #Protecting from SYN flood
     sudo iptables -A INPUT  -p tcp ! --syn -m state --state NEW -j DROP
