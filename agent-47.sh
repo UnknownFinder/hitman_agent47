@@ -20,7 +20,6 @@ if [ $choice -eq 1 ]; then
 fi
 if [ $choice -eq 2 ]; then 
     echo "Please read this instruction to avoid problems in future:"
-	echo "If you want to open ports, enter 1, then follow the instructions:"
     echo "If you want to block one port enter 2, then follow the instructions"
     echo "If you want to block more than one port enter 3, then follow the instruction"
 	echo "If you want to create white list of IP-addresses and block all orher connections enter 4, then follow the instruction"
@@ -67,6 +66,7 @@ if [ $choice -eq 2 ]; then
 			sudo iptables -X
    		fi
 fi
+echo "O'kay, you've create some firewall settings."
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
 	echo "1 to create service which will controll thresholds"
