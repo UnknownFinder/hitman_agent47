@@ -36,13 +36,15 @@ if [ $choice -eq 2 ]; then
         sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
 	fi
     if [ $firewall_choice -eq 3 ]; then
-        echo "You have chosen to close some ports. Please, enter amount of ports, which must be closed, then enter their numbers. Press 0 to stop."
-		declare -a closed_ports
-        read -a closed_ports
-        for port in "${closed_ports}"; do
-            sudo iptables -A INPUT -p tcp --dport $port -j DROP
-            sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
-            sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
+        echo "You have chosen to close some ports. Please, enter ports, which must be closed. Press 0 to stop."
+		while true; do
+  		read port
+        sudo iptables -A INPUT -p tcp --dport $port -j DROP
+        sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
+        sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
+		if [[ $port -eq 0 ]]; then
+  			break
+	 	fi
         done
 	fi
         if [ $firewall_choice -eq 4 ]; then
