@@ -26,6 +26,7 @@ if [ $choice -eq 2 ]; then
 	echo "If you want to create white list of IP-addresses and block all orher connections enter 4, then follow the instruction"
 	echo "If you want to create blacklist of IP-addresses and accept all other connections entire 5 then follow the instruction"
 	echo "If you want to delete all chains, enter 6."
+ 	echo "Enter 99 to exit."
    	read firewall_choice
     if [ $firewall_choice -eq 2 ]; then
     	echo "You have chosen to close one port. Please, enter a port number:"
