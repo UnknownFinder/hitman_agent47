@@ -17,7 +17,8 @@ echo "To stop this script enter 99"
 read choice
 if [ $choice -eq 1 ]; then 
 	bash $SCRIPT_DIRECTORY/system_monitor.sh
-elif [ $choice -eq 2 ]; then 
+fi
+if [ $choice -eq 2 ]; then 
     echo "Please read this instruction to avoid problems in future:"
 	echo "If you want to open ports, enter 1, then follow the instructions:"
     echo "If you want to block one port enter 2, then follow the instructions"
@@ -27,7 +28,6 @@ elif [ $choice -eq 2 ]; then
 	echo "If you want to delete all chains, enter 6."
  	echo "If you want to exit enter 99"
    	read firewall_choice
-	while [[ $firewall_choice -ne 99 ]]; do
         #We will drop all packages with invalid status
         sudo iptables -A INNPUT -m state --state INVALID -j DROP
         sudo iptables -A FORWARD -m state --state INVALID -j DROP
@@ -83,7 +83,6 @@ elif [ $choice -eq 2 ]; then
             sudo iptables -F
 			sudo iptables -X
    		fi
-	done
 fi
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
