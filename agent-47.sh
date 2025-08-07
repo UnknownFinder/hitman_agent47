@@ -30,15 +30,9 @@ if [ $choice -eq 2 ]; then
    	read firewall_choice
     if [ $firewall_choice -eq 1 ]; then
         echo "Enter port numbers. Press 0 to stop."
-		open_ports=()
-        while true; do
-			read element
-   			if [[ $element -ne 0 ]]; then
-	  			break
-	  		fi
-	 		open_ports+=("$element")
-		done
-        for element in "${open_ports[@]}"; do
+		read amount
+        for ((i = 0 ; i < $amount ; i++)); do
+			read $element
             sudo iptables -A INPUT -p tcp --dport $element -j ACCEPT
         done
 	fi
