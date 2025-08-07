@@ -46,42 +46,42 @@ if [ $choice -eq 2 ]; then
                 sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
             done
         if [ $firewall_choice -eq 2 ]; then
-                echo "You have chosen to close one port. Please, enter a port number:"
-                read port
-                sudo iptables -A INPUT -p tcp --dport $port -j DROP
-                sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
+            echo "You have chosen to close one port. Please, enter a port number:"
+            read port
+            sudo iptables -A INPUT -p tcp --dport $port -j DROP
+            sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
 		fi
         if [ $firewall_choice -eq 3 ]; then
-                echo "You have chosen to close some ports. Please, enter ports, which must be closed."
-                declare -a closed_ports
-                read -a closed_ports
-                for port in "${closed_ports}"; do
-                        sudo iptables -A INPUT -p tcp --dport $port -j DROP
-                        sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
-                        sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
-                done
+            echo "You have chosen to close some ports. Please, enter ports, which must be closed."
+			declare -a closed_ports
+            read -a closed_ports
+            for port in "${closed_ports}"; do
+                    sudo iptables -A INPUT -p tcp --dport $port -j DROP
+                    sudo iptables -A OUTPUT -p tcp --dport $port -j DROP
+                    sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
+            done
 		fi
         if [ $firewall_choice -eq 4 ]; then
-                echo "Enter ip-addresses that must be added to whitelist:"
-                declare -a whitelist
-                read -a whitelist
-                for ip_address in "${whitelist}"; do
-                        sudo iptables -A INPUT -s $ip_address -j ACCEPT
-                        sudo iptables -A OUTPUT -s $ip_address -j ACCEPT
-                done
+            echo "Enter ip-addresses that must be added to whitelist:"
+            declare -a whitelist
+            read -a whitelist
+            for ip_address in "${whitelist}"; do
+                sudo iptables -A INPUT -s $ip_address -j ACCEPT
+                sudo iptables -A OUTPUT -s $ip_address -j ACCEPT
+            done
 		fi
         if [ $firewall_choice -eq 5 ]; then 
-                echo "Enter ip-addresses which must be added at blacklist:"
-                declare -a blacklist
-                read -a blacklist
-                for ip_address in "${blacklist}"; do
-                        sudo iptables -A INPUT -s $ip_address -j DROP
-                        sudo iptables -A OUTPUT -s $ip_address -j DROP
-                done
+			echo "Enter ip-addresses which must be added at blacklist:"
+            declare -a blacklist
+            read -a blacklist
+            for ip_address in "${blacklist}"; do
+                sudo iptables -A INPUT -s $ip_address -j DROP
+                sudo iptables -A OUTPUT -s $ip_address -j DROP
+            done
 		fi
         if [ $firewall_choice -eq 6 ]; then
-                sudo iptables -F
-				sudo iptables -X
+            sudo iptables -F
+			sudo iptables -X
 		fi
 	done
 fi
