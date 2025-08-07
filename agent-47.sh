@@ -29,11 +29,17 @@ if [ $choice -eq 2 ]; then
  	echo "If you want to exit enter 99"
    	read firewall_choice
     if [ $firewall_choice -eq 1 ]; then
-        echo "Enter port numbers:"
-		declare -a open_ports
-        read -a open_ports
-        for openport in "${open_ports}"; do
-            sudo iptables -A INPUT -p tcp --dport $openport -j ACCEPT
+        echo "Enter port numbers. Press 0 to stop."
+		open_ports=()
+        while true; do
+			read element
+   			if [[ $element -ne 0 ]]; then
+	  			break
+	  		fi
+	 		open_ports+=("$element")
+		done
+        for element in "${open_ports[@]}"; do
+            sudo iptables -A INPUT -p tcp --dport $element -j ACCEPT
         done
 	fi
     if [ $firewall_choice -eq 2 ]; then
@@ -43,7 +49,7 @@ if [ $choice -eq 2 ]; then
         sudo iptables -A INPUT -p UDP -s 0/0 --dport $port -j DROP
 	fi
     if [ $firewall_choice -eq 3 ]; then
-        echo "You have chosen to close some ports. Please, enter ports, which must be closed."
+        echo "You have chosen to close some ports. Please, enter amount of ports, which must be closed, then enter their numbers. Press 0 to stop."
 		declare -a closed_ports
         read -a closed_ports
         for port in "${closed_ports}"; do
