@@ -19,7 +19,7 @@ if [ $choice -eq 1 ]; then
 	bash $SCRIPT_DIRECTORY/system_monitor.sh
 fi
 if [ $choice -eq 2 ]; then 
-  	while [ $firewall_choice -ne 99]; do
+  	while [[ $firewall_choice -ne 99 ]]; do
       	echo "Please read this instruction to avoid problems in future:"
 	    echo "If you want to open ports, enter 1, then follow the instructions:"
     	echo "If you want to block one port enter 2, then follow the instructions"
