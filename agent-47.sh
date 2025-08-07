@@ -68,9 +68,9 @@ if [ $choice -eq 2 ]; then
 	 	if [ $firewall_choice -eq 99 ]; then
    			break
 	  	fi
+	echo "O'kay, you've create some firewall settings."
 	done
 fi
-echo "O'kay, you've create some firewall settings."
 if [ $choice -eq 3 ]; then
 	echo "O'kay, my friend. Now enter:"
 	echo "1 to create service which will controll thresholds"
