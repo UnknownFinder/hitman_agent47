@@ -1,4 +1,20 @@
 #!/bin/bash
+function validate_ip() {
+    local ip=$1
+    	if [[ $ip =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+        	return 0
+    	else
+        	return 1
+    	fi
+}
+function validate_port() {
+    local port=$1
+    	if [[ $port =~ ^[0-9]+$ && $port -ge 1 && $port -le 65535 ]]; then
+        	return 0
+    	else
+        	return 1
+    	fi
+}
 DIR=$(pwd)
 export SCRIPT_DIRECTORY=$DIR 
 sleep 1
@@ -30,22 +46,6 @@ while true; do
     	sudo iptables -A INPUT --fragment -p ICMP -j DROP
     	sudo iptables -A OUTPUT --fragment -p ICMP -j DROP
 		echo "Now your system protected from SYN flood, ICMP redirection and packages with <INVALID> status."
- 		function validate_ip() {
-    		local ip=$1
-    		if [[ $ip =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
-        		return 0
-    		else
-        		return 1
-    		fi
-		}
-		function validate_port() {
-    		local port=$1
-    		if [[ $port =~ ^[0-9]+$ && $port -ge 1 && $port -le 65535 ]]; then
-        		return 0
-    		else
-        		return 1
-    		fi
-		}
 		while true; do
     		echo "Enter 1 to close some ports, then follow instructions"
     		echo "Enter 2 to open some ports, then follow instructions"
