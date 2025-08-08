@@ -5,11 +5,11 @@ sleep 1
 while true; do
 	clear
 	echo " _    _   ___   _____     _     _           __       _    _ "
-	echo "| |  | | |_ _| |_   _|   / \   / \         /  \     | |  | |"
+	echo "| |  | | [_ _] [_   _]   / \   / \         /  \     | |  | |"
 	echo "| |__| |  | |    | |    /   \_/   \       / /\ \    |  \ | |"
 	echo "|  __  |  | |    | |   /  _     _  \     / ____ \   |   \| |"
 	echo "| |  | |  | |    | |  /  / \   / \  \   / /    \ \  |  _   |"
-	echo "|_|  |_| |___|   |_| /__/   \_/   \__\ /_/      \_\ |_| \__|"
+	echo "|_|  |_| [___]   |_| /__/   \_/   \__\ /_/      \_\ |_| \__|"
 	echo "Hello, User! I was created to help you set some settings on  your machine. Please read this short manual before using:"
 	echo "To know information about your system enter 1"
 	echo "To create a simple firewall rool enter 2"
