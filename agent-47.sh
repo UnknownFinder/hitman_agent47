@@ -1,20 +1,4 @@
 #!/bin/bash
-function validate_ip() {
-    local ip=$1
-    if [[ $ip =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
-        return 0
-    else
-        return 1
-    fi
-}
-function validate_port() {
-    local port=$1
-    if [[ $port =~ ^[0-9]+$ && $port -ge 1 && $port -le 65535 ]]; then
-        return 0
-    else
-        return 1
-    fi
-}
 DIR=$(pwd)
 export SCRIPT_DIRECTORY=$DIR 
 sleep 1
