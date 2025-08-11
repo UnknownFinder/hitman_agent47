@@ -33,24 +33,29 @@ while true; do
     	bash $SCRIPT_DIRECTORY/create_firewall.sh
 fi
 if [ $choice -eq 3 ]; then
-	echo "O'kay, my friend. Now enter:"
-	echo "1 to create service which will controll thresholds"
-	echo "2 to delete this service"
-	read hardware_choice
-	if [ $hardware_choice -eq 1 ]; then
-		echo "Enter % of CPU usage"
-		read cpu_treshold
-		echo "Enter % of RAM usage"
-		read ram_treshold
-		echo "You have entered parameters. Please, wait... "
-		bash $SCRIPT_DIRECTORY/call_daemon.sh
-		echo "Well, you have entered parameters, so I will work for you to protect your device from crushs."
-	elif [ $hardware_choice -eq 2 ]; then
-		cd /etc/systemd/system
-		rm hitman.service
-		echo "Well, now you can run this script again to rewrite the parameters."
-		cd
-	fi
+	while true; do
+		echo "O'kay, my friend. Now enter:"
+		echo "1 to create service which will controll thresholds"
+		echo "2 to delete this service"
+		read hardware_choice
+  		if [ $hardware_choice -eq 99 ]; then
+			break
+   		fi
+		if [ $hardware_choice -eq 1 ]; then
+			echo "Enter % of CPU usage"
+			read cpu_treshold
+			echo "Enter % of RAM usage"
+			read ram_treshold
+			echo "You have entered parameters. Please, wait... "
+			bash $SCRIPT_DIRECTORY/call_daemon.sh
+			echo "Well, you have entered parameters, so I will work for you to protect your device from crushs."
+		elif [ $hardware_choice -eq 2 ]; then
+			cd /etc/systemd/system
+			rm hitman.service
+			echo "Well, now you can run this script again to rewrite the parameters."
+			cd
+		fi
+	done
 fi	
 if [ $choice -eq 99 ]; then
 	echo "Goodbuy, have a nice day!"
