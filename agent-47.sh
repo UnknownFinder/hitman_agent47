@@ -37,6 +37,7 @@ if [ $choice -eq 3 ]; then
 		echo "O'kay, my friend. Now enter:"
 		echo "1 to create service which will controll thresholds"
 		echo "2 to delete this service"
+  		echo "99 to exit"
 		read hardware_choice
   		if [ $hardware_choice -eq 99 ]; then
 			break
