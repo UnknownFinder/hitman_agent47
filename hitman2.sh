@@ -9,9 +9,6 @@ if [ -n "$zombies" ]; then
 		kill -9 $zombie
 	done
 fi
-#Определение порогов загрузки ЦП и ОЗУ
-cpu_max=$1
-ram_max=$2
 #Поиск процессов, превышающих установленные пороги
 high_cpu_proc=$(top -bn1 | grep PID -A 20 | tail -n +2 | awk -v tresh=$cpu_max '{if ($9+0>=tresh){print $3}}')
 high_ram_proc=$(top -bn1 | grep PID -A 20 | tail -n +2 | awk -v tresh=$ram_max '{if ($10+0>=tresh){print $3}}')
