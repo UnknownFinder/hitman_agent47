@@ -20,6 +20,7 @@ while true; do
 		bash $SCRIPT_DIRECTORY/system_monitor.sh
 	fi
 	if [ $choice -eq 2 ]; then
+ 		sudo bash $SCRIPT_DIRECTORY/find_targets.sh
 		#We will drop all packages with invalid status
     	sudo iptables -A INPUT -m state --state INVALID -j DROP
     	sudo iptables -A FORWARD -m state --state INVALID -j DROP
