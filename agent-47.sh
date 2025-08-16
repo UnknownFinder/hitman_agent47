@@ -44,9 +44,9 @@ if [ $choice -eq 3 ]; then
    		fi
 		if [ $hardware_choice -eq 1 ]; then
 			echo "Enter % of CPU usage"
-			read cpu_treshold
+			read max_cpu
 			echo "Enter % of RAM usage"
-			read ram_treshold
+			read max_ram
 			echo "You have entered parameters. Please, wait... "
 			bash $SCRIPT_DIRECTORY/call_daemon.sh
 			echo "Well, you have entered parameters, so I will work for you to protect your device from crushs."
