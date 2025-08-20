@@ -3,15 +3,15 @@ LOG_FILE="/var/log/syslog"
 IP_LIST="ips.txt"
 RESULTS="results.txt"
 PORTS=(22 80 139 443)
-for PORT in ${PORTS[*]}; do
-	grep "New connections from" $LOG_FILE | grep "$PORT" | awk '{print $NF}' | sort -u >> $IP_LIST
-done
 if command -v enum4linux &> /dev/null; then
 	sleep 1
 else
 	echo "Now I need install some instruments to work with my targets."
 	sudo snap install enum4linux
 fi
+for PORT in ${PORTS[*]}; do
+	grep "New connections from" $LOG_FILE | grep "$PORT" | awk '{print $NF}' | sort -u >> $IP_LIST
+done
 while IFS =read -r ip; do
 	echo "Scanning target $ip" >> $RESULTS
 	nmap -A -sV >> $RESULTS
