@@ -28,6 +28,7 @@ while true; do
 		RESULTS="results.txt"
   		export information=$RESULTS
 		PORTS=(22 80 139 443)
+  		export $PORTS
 		if command -v enum4linux &> /dev/null; then
 			sleep 1
 		else
