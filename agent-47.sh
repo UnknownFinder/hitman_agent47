@@ -21,6 +21,19 @@ while true; do
 	fi
 	if [ $choice -eq 2 ]; then
  		sudo bash $SCRIPT_DIRECTORY/find_targets.sh
+   		LOG_FILE="/var/log/syslog"
+	 	export watching_from=$LOG_FILE
+		IP_LIST="ips.txt"
+  		export target_list=$IP_LIST
+		RESULTS="results.txt"
+  		export information=$RESULTS
+		PORTS=(22 80 139 443)
+		if command -v enum4linux &> /dev/null; then
+			sleep 1
+		else
+			echo "Now I need install some instruments to work with my targets."
+			sudo snap install enum4linux
+		fi
 		#We will drop all packages with invalid status
     	sudo iptables -A INPUT -m state --state INVALID -j DROP
     	sudo iptables -A FORWARD -m state --state INVALID -j DROP
