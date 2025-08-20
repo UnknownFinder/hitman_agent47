@@ -1,9 +1,9 @@
 #!/bin/bash
 DIR=$(pwd)
 export SCRIPT_DIRECTORY=$DIR 
+clear
 sleep 1
 while true; do
-	clear
 	echo " _    _   ___   _____     _     _           __       _    _ "
 	echo "| |  | | [_ _] [_   _]   / \   / \         /  \     | |  | |"
 	echo "| |__| |  | |    | |    /   \_/   \       / /\ \    |  \ | |"
@@ -30,6 +30,11 @@ while true; do
     	#Protecting from ICMP redirectioin
     	sudo iptables -A INPUT --fragment -p ICMP -j DROP
     	sudo iptables -A OUTPUT --fragment -p ICMP -j DROP
+	 	echo "Creating firewall"
+	 	for i in {1..10}; do
+   			echo  -n "*"
+	  		sleep 0.5
+	  	done
 		echo "Now your system protected from SYN flood, ICMP redirection and packages with <INVALID> status."
     	bash $SCRIPT_DIRECTORY/create_firewall.sh
 fi
@@ -45,15 +50,17 @@ if [ $choice -eq 3 ]; then
    		fi
 		if [ $hardware_choice -eq 1 ]; then
 			echo "Enter % of CPU usage"
-			read max_cpu
+			read cpu_threshold
 			echo "Enter % of RAM usage"
-			read max_ram
+			read ram_threshold
+   			export max_cpu=$cpu_threshold
+	  		export max_ram=$ram_threshold
 			echo "You have entered parameters. Please, wait... "
 			bash $SCRIPT_DIRECTORY/call_daemon.sh
 			echo "Well, you have entered parameters, so I will work for you to protect your device from crushs."
 		elif [ $hardware_choice -eq 2 ]; then
 			cd /etc/systemd/system
-			rm hitman.service
+			rm hitman.service -y
 			echo "Well, now you can run this script again to rewrite the parameters."
 			cd
 		fi
