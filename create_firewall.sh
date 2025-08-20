@@ -20,7 +20,8 @@ while true; do
     		echo "Enter 2 to open some ports, then follow instructions"
     		echo "Enter 3 to create blacklist of ip-addresses, then follow instructions"
     		echo "Enter 4 to create whitelist of ip-addresses, then follow instructions"
-    		echo "Enter 5 to delete your settings"
+	  		echo "Enter 5 to create daemon, who will listen 22,80,139,443 ports and give you information about clients on this ports"
+    		echo "Enter 6 to delete your settings"
     		echo "Enter 99 to exit"
     		read firewall_choice
     		case $firewall_choice in
@@ -78,7 +79,11 @@ while true; do
                 	sudo iptables -A INPUT -s "$IP" -j ACCEPT
             	done
             	;;
-        	5)
+			5)
+   				sudo su
+	   			UNIT_NAME="watchdog"
+	   			PATH_TO_SCRIPT="$SCRIPT_DIRECTOTY/find_targets.sh"
+        	6)
             	sudo iptables -F
 			 	sudo iptables -X
            	echo "All rules cleared."
