@@ -83,6 +83,22 @@ while true; do
    				sudo su
 	   			UNIT_NAME="watchdog"
 	   			PATH_TO_SCRIPT="$SCRIPT_DIRECTOTY/find_targets.sh"
+	   			PATH_TO_DAEMON="/etc/systemd/system/watchog.service"
+	   			echo "[Unit]" >> $PATH_TO_DAEMON
+	   			echo "Description=Daemon to look after clients on some ports" >> $PATH_TO_DAEMON
+	   			echo "After=network.service" >> $PATH_TO_DAEMON
+	   			echo "[Service]" >> $PATH_TO_DAEMON
+	   			echo "Type=exec" >> $PATH_TO_DAEMON
+	   			echo "ExecStart=$PATH_TO_SCRIPT" >> $PATH_TO_DAEMON
+	   			echo "Restart=always" >> $PATH_TO_DAEMON
+	   			echo "[Install]" >> $PATH_TO_DAEMON
+	   			echo "WantedBy=multi-user.target" >> $PATH_TO_DAEMON
+	   			sudo systemctl daemon-reload
+	   			sudo systemctl enable "watchdog.service"
+	   			sudo systemctl start "watchdog.service"
+	   			clear
+	   			echo "<([+])>"
+	   			echo "Now I will watch om them!"
         	6)
             	sudo iptables -F
 			 	sudo iptables -X
