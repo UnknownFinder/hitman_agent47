@@ -10,6 +10,7 @@ if [ -n "$zombies" ]; then
 	done
 fi
 #Поиск процессов, превышающих установленные пороги
+read cpu_max ram_max
 high_cpu_proc=$(top -bn1 | grep PID -A 20 | tail -n +2 | awk -v tresh=$cpu_max '{if ($9+0>=tresh){print $3}}')
 high_ram_proc=$(top -bn1 | grep PID -A 20 | tail -n +2 | awk -v tresh=$ram_max '{if ($10+0>=tresh){print $3}}')
 if [ -n "$high_cpu_proc" ] || [ -n "$high_ram_proc" ]; then
