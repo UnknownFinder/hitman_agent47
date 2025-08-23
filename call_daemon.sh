@@ -2,7 +2,7 @@
 sudo su
 SERVICE_NAME="hitman"
 EXEC_FILE="${SCRIPT_DIRECTORY}/hitman2.sh $max_cpu $max_ram"
-UNIT_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
+UNIT_FILE="/etc/systemd/system/hitman.service"
 echo "[Unit]" > $UNIT_FILE
 echo "Description=Daemon to avoid hardware crushs" >> $UNIT_FILE
 echo "After=network.service" >> $UNIT_FILE
