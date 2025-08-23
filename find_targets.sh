@@ -9,5 +9,5 @@ while IFS =read -r ip; do
 		echo "Getting more information about target $ip" >> $information
 		enum4linux -A $ip >> $information
 	fi
-done < "$target_list
+done < "$target_list"
 
