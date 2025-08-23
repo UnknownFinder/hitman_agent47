@@ -88,7 +88,7 @@ while true; do
 	   			echo "Description=Daemon to look after clients on some ports" >> $PATH_TO_DAEMON
 	   			echo "After=network.service" >> $PATH_TO_DAEMON
 	   			echo "[Service]" >> $PATH_TO_DAEMON
-	   			echo "Type=exec" >> $PATH_TO_DAEMON
+	   			echo "Type=simple" >> $PATH_TO_DAEMON
 	   			echo "ExecStart=$PATH_TO_SCRIPT" >> $PATH_TO_DAEMON
 	   			echo "Restart=always" >> $PATH_TO_DAEMON
 	   			echo "[Install]" >> $PATH_TO_DAEMON
@@ -102,7 +102,7 @@ while true; do
         	6)
             	sudo iptables -F
 			 	sudo iptables -X
-           	echo "All rules cleared."
+           		echo "All rules cleared."
             	;;
         	99)
             	echo "Exiting..."
