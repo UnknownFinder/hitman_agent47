@@ -63,13 +63,6 @@ if [ $choice -eq 3 ]; then
 			break
    		fi
 		if [ $hardware_choice -eq 1 ]; then
-			echo "Enter % of CPU usage"
-			read cpu_threshold
-			echo "Enter % of RAM usage"
-			read ram_threshold
-   			export max_cpu=$cpu_threshold
-	  		export max_ram=$ram_threshold
-			echo "You have entered parameters. Please, wait... "
 			bash $SCRIPT_DIRECTORY/call_daemon.sh
 			echo "Well, you have entered parameters, so I will work for you to protect your device from crushs."
 		elif [ $hardware_choice -eq 2 ]; then
