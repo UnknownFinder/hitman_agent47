@@ -1,11 +1,10 @@
 #!/bin/bash
-sudo su
 echo "Enter % of CPU usage"
-read cpu_threshold
+read max_cpu
 echo "Enter % of RAM usage"
-read ram_threshold
-export max_cpu=$cpu_threshold
-export max_ram=$ram_threshold
+read max_ram
+export $max_cpu
+export $max_ram
 echo "You have entered parameters. Please, wait... "
 SERVICE_NAME="hitman"
 EXEC_FILE="${SCRIPT_DIRECTORY}/hitman2.sh $max_cpu $max_ram"
