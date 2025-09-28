@@ -7,7 +7,7 @@ echo "Description=Daemon to avoid hardware crushs" >> $UNIT_FILE
 echo "After=network.service" >> $UNIT_FILE
 
 echo "[Service]" >> $UNIT_FILE
-echo "Type=exec" >> $UNIT_FILE
+echo "Type=simple" >> $UNIT_FILE
 echo "ExecStart="$SCRIPT_DIRECTORY/hitman2.sh"" >> $UNIT_FILE
 echo "Restart=always" >> $UNIT_FILE
 
