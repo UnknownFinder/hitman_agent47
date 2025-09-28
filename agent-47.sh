@@ -70,6 +70,7 @@ while true; do
 	echo -e "\nФайрвол настроен!"
 	clear
 	sudo sh create_firewall.sh
+fi
 if [ $choice -eq 3 ]; then
 	while true; do
 		echo "O'kay, my friend. Now enter:"
