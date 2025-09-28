@@ -11,7 +11,7 @@ while true; do
 	echo "| |  | |  | |    | |  /  / \   / \  \   / /    \ \  |  _   |"
 	echo "|_|  |_| [___]   |_| /__/   \_/   \__\ /_/      \_\ |_| \__|"
 	echo "Hello, User! I was created to help you set some settings on  your machine. Please read this short manual before using:"
-	echo "To know information about your system enter 1"
+	echo "To check information about your system enter 1"
 	echo "To create a simple firewall rool enter 2"
 	echo "To protect your system from hardware crushs enter 3"
 	echo "To exit enter 99"	
@@ -20,38 +20,54 @@ while true; do
 		bash $SCRIPT_DIRECTORY/system_monitor.sh
 	fi
 	if [ $choice -eq 2 ]; then
- 		sudo bash $SCRIPT_DIRECTORY/find_targets.sh
-   		LOG_FILE="/var/log/syslog"
-	 	export watching_from=$LOG_FILE
-		IP_LIST="ips.txt"
-  		export target_list=$IP_LIST
-		RESULTS="results.txt"
-  		export information=$RESULTS
-		PORTS=(22 80 139 443)
-  		export $PORTS
-		if command -v enum4linux &> /dev/null; then
-			sleep 1
-		else
-			echo "Now I need install some instruments to work with my targets."
-			sudo snap install enum4linux
-		fi
-		#We will drop all packages with invalid status
-    	sudo iptables -A INPUT -m state --state INVALID -j DROP
-    	sudo iptables -A FORWARD -m state --state INVALID -j DROP
-    	#Protecting from SYN flood
-    	sudo iptables -A INPUT  -p tcp ! --syn -m state --state NEW -j DROP
-    	sudo iptables -A OUTPUT -p tcp ! --syn -m state --state NEW -j DROP
-    	#Protecting from ICMP redirectioin
-    	sudo iptables -A INPUT --fragment -p ICMP -j DROP
-    	sudo iptables -A OUTPUT --fragment -p ICMP -j DROP
-	 	echo "Creating firewall"
-	 	for i in {1..10}; do
-   			echo  -n "*"
-	  		sleep 0.5
-	  	done
-		echo "Now your system protected from SYN flood, ICMP redirection and packages with <INVALID> status."
-    	bash $SCRIPT_DIRECTORY/create_firewall.sh
-fi
+		# Запускаем от рута или используем sudo перед каждым вызовом iptables
+		if [ "$(id -u)" != "0" ]; then
+   			echo "Нужно запустить от root!" >&2
+   		exit 1
+	fi
+	# Сбросим все существующие правила
+	iptables -F
+	# Устанавливаем политику по умолчанию - блокировать входящие соединения
+	iptables -P INPUT DROP
+	iptables -P FORWARD DROP
+	iptables -P OUTPUT ACCEPT
+	# Разрешаем локальные петли
+	iptables -A INPUT -i lo -j ACCEPT
+	# Разрешаем уже установленные и связанные подключения
+	iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+	# Предотвращение bruteforce атак на ssh
+	iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name>
+	iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --s>
+	# SYN Flood защита
+	iptables -N syn-flood
+	iptables -A INPUT -p tcp --syn -j syn-flood
+	iptables -A syn-flood -m limit --limit 10/s --limit-burst 20 -j RETURN
+	iptables -A syn-flood -j LOG --log-prefix "SYN-flood: "
+	iptables -A syn-flood -j DROP
+	# Ping Flood защита
+	iptables -A INPUT -p icmp -m limit --limit 1/s --limit-burst 1 -j ACCEPT
+	iptables -A INPUT -p icmp -j DROP
+	# UDP Flood защита
+	iptables -N udp-flood
+	iptables -A INPUT -p udp -j udp-flood
+	iptables -A udp-flood -p udp -m limit --limit 50/s -j RETURN
+	iptables -A udp-flood -j DROP
+	# Connection Limit
+	iptables -A INPUT -p tcp -m connlimit --connlimit-above 20 -j REJECT
+	# Блокируем сканирование NULL пакетов
+	iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+	# Блокируем Xmas пакеты (FIN, PSH and URG flags set)
+	iptables -A INPUT -p tcp --tcp-flags FIN,PSH,URG FIN,PSH,URG -j DROP
+	# Блокируем пакеты с установленными всеми флагами TCP
+	iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+	# Защищаемся от фрагментации пакетов
+	iptables -A INPUT -f -j DROP
+	for i in {1..10}; do
+        echo -n "[]"
+        sleep 1 
+	done
+	sleep 1
+	echo -e "\nФайрвол настроен!"
 if [ $choice -eq 3 ]; then
 	while true; do
 		echo "O'kay, my friend. Now enter:"
