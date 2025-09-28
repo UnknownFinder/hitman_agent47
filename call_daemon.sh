@@ -14,5 +14,5 @@ echo "Restart=always" >> $UNIT_FILE
 echo "[Install]" >> $UNIT_FILE
 echo "WantedBy=multi-user.target" >> $UNIT_FILE
 sudo systemctl daemon-reload
-sudo systemctl enable "${SERVICE_NAME}.service"
-sudo systemctl start "${SERVICE_NAME}.service"
+sudo systemctl enable "hitman.service"
+sudo systemctl start "hitman.service"
