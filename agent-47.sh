@@ -36,8 +36,8 @@ while true; do
 	# Разрешаем уже установленные и связанные подключения
 	iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 	# Предотвращение bruteforce атак на ssh
-	iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name>
-	iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --s>
+	iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH --rsource
+	iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --ste --seconds 60 --hitcount 3 --name SSH --rsource -j DROP
 	# SYN Flood защита
 	iptables -N syn-flood
 	iptables -A INPUT -p tcp --syn -j syn-flood
