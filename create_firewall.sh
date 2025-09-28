@@ -20,8 +20,7 @@ while true; do
     		echo "Enter 2 to open some ports, then follow instructions"
     		echo "Enter 3 to create blacklist of ip-addresses, then follow instructions"
     		echo "Enter 4 to create whitelist of ip-addresses, then follow instructions"
-	  		echo "Enter 5 to create daemon, who will listen 22,80,139,443 ports and give you information about clients on this ports"
-    		echo "Enter 6 to delete your settings"
+    		echo "Enter 5 to delete your settings"
     		echo "Enter 99 to exit"
     		read firewall_choice
     		case $firewall_choice in
@@ -79,27 +78,7 @@ while true; do
                 	sudo iptables -A INPUT -s "$IP" -j ACCEPT
             	done
             	;;
-			5)
-   				sudo su
-	   			UNIT_NAME="watchdog"
-	   			PATH_TO_SCRIPT="$SCRIPT_DIRECTOTY/find_targets.sh"
-	   			PATH_TO_DAEMON="/etc/systemd/system/watchog.service"
-	   			echo "[Unit]" >> $PATH_TO_DAEMON
-	   			echo "Description=Daemon to look after clients on some ports" >> $PATH_TO_DAEMON
-	   			echo "After=network.service" >> $PATH_TO_DAEMON
-	   			echo "[Service]" >> $PATH_TO_DAEMON
-	   			echo "Type=simple" >> $PATH_TO_DAEMON
-	   			echo "ExecStart=$PATH_TO_SCRIPT" >> $PATH_TO_DAEMON
-	   			echo "Restart=always" >> $PATH_TO_DAEMON
-	   			echo "[Install]" >> $PATH_TO_DAEMON
-	   			echo "WantedBy=multi-user.target" >> $PATH_TO_DAEMON
-	   			sudo systemctl daemon-reload
-	   			sudo systemctl enable "watchdog.service"
-	   			sudo systemctl start "watchdog.service"
-	   			clear
-	   			echo "<([+])>"
-	   			echo "Now I will watch om them!"
-        	6)
+        	5)
             	sudo iptables -F
 			 	sudo iptables -X
            		echo "All rules cleared."
